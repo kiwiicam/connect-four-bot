@@ -1,6 +1,6 @@
 .board {
     width: 30vw;
-    height: 50vh;
+    height: 60vh;
     background-color: black;
     display: flex;
     justify-content: space-around;
