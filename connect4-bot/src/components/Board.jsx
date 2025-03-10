@@ -7,23 +7,12 @@ import { allLegalMoves } from './Bot';
 function Board() {
 
     var currentBoard =
-        [[0, 0, 0, 0, 0, 0, 0],
+        [[0, 0, 0, 0, 0, 'x', 0],
+        [0, 0, 0, 0, 0, 'x', 0],
+        [0, 0, 0, 0, 0, 'x', 0],
+        ['x', 'x', 'x', 'x', 0, 'x', 0],
         [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0]];
-
-        var currentBoard2 =
-        [[0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 'x'],
-        [0, 0, 0, 0, 0, 0, 'x'],
-        [0, 0, 0, 0, 0, 0, 'x'],
-        ['x', 0, 'x', 0, 0, 0, 'x'],
-        ['x', 0, 'x', 0, 0, 0, 'x']];
-
-
-
+        ['x', 'x', 'x', 'x', 0, 0, 0]];
 
     function getBoard() {
         return currentBoard;
@@ -40,12 +29,58 @@ function Board() {
         }
         console.log(currentBoard);
 
+    }
+    function checkWin(board) {
+        var prev;
+        var count = 1;
+        //vertical win
+        for (var i = 0; i < board[0].length; i++) {
+            for (var o = 0; o < board.length; o++) {
+                var char = board[o][i]
+                if (char === 'x') {
+                    if (char === prev) {
+                        count++;
+                        if (count === 4) {
+                            console.log("WINNNER!")
+                        }
+                    }
+                }
+                else {
+                    count = 1;
+                }
+                prev = char;
+
+            }
+        }
+
+        //horizontal win
+        var prev;
+        var count = 1;
+        for (var i = 0; i < board.length; i++) {
+            for (var o = 0; o < board[0].length; o++) {
+                var char = board[i][o]
+                if (char === 'x') {
+                    if (char === prev) {
+                        count++;
+                        if (count === 4) {
+                            console.log("WINNNER!")
+                        }
+                    }
+                }
+                else {
+                    count = 1;
+                }
+                prev = char;
+
+            }
+        }
+        //TODO implement diagonal win detection
+
 
     }
 
     useEffect(() => {
-        var result = allLegalMoves(currentBoard2);
-        console.log(result)
+        checkWin(currentBoard);
     }, []);
 
     return (
