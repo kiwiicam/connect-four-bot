@@ -1,18 +1,26 @@
 import '../css/board.css';
 import React, { useEffect } from 'react';
-import { allLegalMoves } from './Bot';
+import { allLegalMoves, Evaluation } from './Bot';
 
 
 
 function Board() {
 
     var currentBoard =
-        [[0, 0, 0, 0, 0, 'x', 0],
+        [[0, 0, 0, 0, 0, 0, 0],
+        [0, 'o', 0, 0, 'x', 0, 0],
+        [0, 'o', 0, 0, 'x', 0, 0],
+        [0, 'o', 0, 0, 'x', 0, 0],
+        ['x', 'o', 0, 0, 0, 0, 0],
+        ['x', 0, 0, 0, 0, 0, 0]];
+
+    var currentBoard2 =
+        [[0, 0, 0, 0, 0, 0, 'x'],
         [0, 0, 0, 0, 0, 'x', 0],
-        [0, 0, 0, 0, 0, 'x', 0],
-        ['x', 'x', 'x', 'x', 0, 'x', 0],
+        [0, 0, 0, 0, 'x', 0, 0],
+        [0, 0, 0, 'x', 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
-        ['x', 'x', 'x', 'x', 0, 0, 0]];
+        [0, 0, 0, 0, 0, 0, 0]];
 
     function getBoard() {
         return currentBoard;
@@ -31,6 +39,7 @@ function Board() {
 
     }
     function checkWin(board) {
+        var winnarray = []
         var prev;
         var count = 1;
         //vertical win
@@ -42,6 +51,7 @@ function Board() {
                         count++;
                         if (count === 4) {
                             console.log("WINNNER!")
+                            return;
                         }
                     }
                 }
@@ -63,7 +73,8 @@ function Board() {
                     if (char === prev) {
                         count++;
                         if (count === 4) {
-                            console.log("WINNNER!")
+                            console.log("WINNNER!");
+                            return;
                         }
                     }
                 }
@@ -75,12 +86,58 @@ function Board() {
             }
         }
         //TODO implement diagonal win detection
+        var prev;
+        var count = 1;
+        var two;
+        var three;
+        var four;
+        for (var i = 0; i < board.length; i++) {
+            for (var o = 0; o < board[0].length; o++) {
+                if (board[i][o] === 'x' || board[i][o] === 'o') {
+                    //left to right check
+                    if (i <= 2 && o > 2) {
+                        var prev = board[i][o];
+                        var two = board[i + 1][o - 1];
+                        var three = board[i + 2][o - 2];
+                        var four = board[i + 3][o - 3];
+
+                        console.log(prev, two, three, four);
+
+                        if (prev === two && two === three && three === four) {
+                            winnarray.push(board[i][o]);
+                            winnarray.push(board[i + 1][o - 1]);
+                            winnarray.push(board[i + 2][o - 2]);
+                            winnarray.push(board[i + 3][o - 3]);
+                            console.log("WIN BY BOTTOM-LEFT TO TOP-RIGHT DIAGONAL");
+                            console.log(winnarray);
+                            return;
+                        }
+                    }
+                    //right to left check
+                    if (i < board.length - 3 && o < board[0].length - 3) {
+                        prev = board[i][o];
+                        two = board[i + 1][o + 1]
+                        three = board[i + 2][o + 2]
+                        four = board[i + 3][o + 3]
+                        if (prev === two && two === three && three === four) {
+                            winnarray.push(board[i][o])
+                            winnarray.push(board[i + 1][o + 1])
+                            winnarray.push(board[i + 2][o + 2])
+                            winnarray.push(board[i + 3][o + 3])
+                            console.log("WIN BY DIAGONAL bottm right to top left")
+                            console.log(winnarray);
+                            return
+                        }
+                    }
+                }
+            }
 
 
+        }
     }
 
     useEffect(() => {
-        checkWin(currentBoard);
+        console.log(Evaluation(currentBoard));
     }, []);
 
     return (
@@ -146,5 +203,6 @@ function Board() {
         </div>
     );
 }
-
 export default Board;
+
+
