@@ -56,7 +56,7 @@ export function checkWin(board) {
                     count++;
                     if (count === 4) {
                         console.log("WINNNER!")
-                        return;
+                        return true;
                     }
                 }
             }
@@ -172,14 +172,22 @@ function evaluationInARow(board) {
             if (i > 2) {
                 if (board[i][o] === 'x' || board[i][o] === 'o') {
                     player = board[i][o]
-                    if (board[i - 1][o] === player && board[i - 2][o] === player && board[i - 3][o] === 0) {
+                    if (board[i - 1][o] === player && board[i - 2][o] === player && board[i - 3][o] === player) {
                         if (player === 'x') {
-                            sum += 100
+                            sum += 1000
                         }
                         else {
-                            sum -= 100
+                            sum -= 1000
                         }
                     }
+                    // if (board[i - 1][o] === player && board[i - 2][o] === player && board[i - 3][o] === 0) {
+                    //     if (player === 'x') {
+                    //         sum += 100
+                    //     }
+                    //     else {
+                    //         sum -= 100
+                    //     }
+                    // }
                 }
 
             }
@@ -188,31 +196,47 @@ function evaluationInARow(board) {
     }
 
     //check for horizontal 3 in a row taking "gravity" into account
-    console.log("func called")
     for (var i = 0; i < board.length; i++) {
         for (var o = 0; o < board[0].length; o++) {
             if (o < 4) {
                 if (board[i][o] === 'x' || board[i][o] === 'o') {
                     player = board[i][o];
                     if (i < 5) {
-                        if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0 && board[i + 1][o + 3] !== 0) {
+                        if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === player) {
                             if (player === 'x') {
-                                sum += 100
+                                sum += 1000
                             }
                             else {
-                                sum -= 100
+                                sum -= 1000
                             }
                         }
+
+                        // if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0 && board[i + 1][o + 3] !== 0) {
+                        //     if (player === 'x') {
+                        //         sum += 100
+                        //     }
+                        //     else {
+                        //         sum -= 100
+                        //     }
+                        // }
                     }
                     else {
-                        if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0) {
+                        if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === player) {
                             if (player === 'x') {
-                                sum += 100
+                                sum += 1000
                             }
                             else {
-                                sum -= 100
+                                sum -= 1000
                             }
                         }
+                        // if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0) {
+                        //     if (player === 'x') {
+                        //         sum += 100
+                        //     }
+                        //     else {
+                        //         sum -= 100
+                        //     }
+                        // }
                     }
 
                 }
@@ -221,24 +245,41 @@ function evaluationInARow(board) {
                 if (board[i][o] === 'x' || board[i][o] === 'o') {
                     player = board[i][o];
                     if (i < 5) {
-                        if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0 && board[i + 1][o - 3] !== 0) {
+                        if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === player) {
                             if (player === 'x') {
-                                sum += 100
+                                sum += 1000
                             }
                             else {
-                                sum -= 100
+                                sum -= 1000
                             }
                         }
+                        // if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0 && board[i + 1][o - 3] !== 0) {
+                        //     if (player === 'x') {
+                        //         sum += 100
+                        //     }
+                        //     else {
+                        //         sum -= 100
+                        //     }
+                        // }
                     }
                     else {
-                        if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0) {
+                        if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === player) {
                             if (player === 'x') {
-                                sum += 100
+                                sum += 1000
+                                console.log("found correct four in a (horiz)")
                             }
                             else {
-                                sum -= 100
+                                sum -= 1000
                             }
                         }
+                        // if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0) {
+                        //     if (player === 'x') {
+                        //         sum += 100
+                        //     }
+                        //     else {
+                        //         sum -= 100
+                        //     }
+                        // }
                     }
 
                 }
@@ -252,9 +293,56 @@ function evaluationInARow(board) {
     //left to right diagonal checking
     for (var i = 0; i < board.length; i++) {
         for (var o = 0; o < board[0].length; o++) {
-            if (i > 2 && o < 4)
-            {
+            if (i > 2 && o < 4) {
+                if (board[i][o] === 'x' || board[i][o] === 'o') {
+                    player = board[i][o]
+                    if (board[i - 1][o + 1] === player && board[i - 2][o + 2] === player && board[i - 3][o + 3] === player) {
+                        if (player === 'x') {
+                            sum += 1000
+                            console.log("found correct four in a row (diag)")
 
+                        }
+                        else {
+                            sum -= 1000
+                        }
+                    }
+                    //     if (board[i - 1][o + 1] === player && board[i - 2][o + 2] === player && board[i - 3][o + 3] === 0 && board[i - 2][o + 3] !== 0) {
+                    //         if (player === 'x') {
+                    //             sum += 100
+
+                    //         }
+                    //         else {
+                    //             sum -= 100
+                    //         }
+                    //     }
+
+                    // }
+                }
+                else if (o > 2 && i > 2) {
+                    if (board[i][o] === 'x' || board[i][o] === 'o') {
+                        player = board[i][o]
+                        if (board[i - 1][o - 1] === player && board[i - 2][o - 2] === player && board[i - 3][o - 3] === player) {
+                            if (player === 'x') {
+                                sum += 1000
+                                console.log("found correct four in a row (diag)")
+                            }
+                            else {
+                                sum -= 1000
+                            }
+                        }
+                        // if (board[i - 1][o - 1] === player && board[i - 2][o - 2] === player && board[i - 3][o - 3] === 0 && board[i - 2][o - 3] !== 0) {
+                        //     if (player === 'x') {
+                        //         sum += 100
+                        //         console.log("found correct diagonal with a space")
+                        //     }
+                        //     else {
+                        //         sum -= 100
+                        //     }
+                        // }
+
+                    }
+
+                }
             }
         }
     }
@@ -268,7 +356,7 @@ export function Evaluation(board) {
     //check for 3 in a row for with spaces
     sum += evaluationInARow(board)
     //run the position through the evaluation table to see who has the best pieces in each position
-    //sum += evaluationTableSum(board)
+    sum += evaluationTableSum(board)
 
 
     return sum;

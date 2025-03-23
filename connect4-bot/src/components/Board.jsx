@@ -7,12 +7,12 @@ import { allLegalMoves, Evaluation, checkWin } from './Bot';
 function Board() {
 
     var currentBoard =
-        [[0, 0, 0, 0, 0, 0, 0],
+        [['x', 'x', 'x', 'x', 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 'o', 'o', 'o'],
-        [0, 'x', 'x', 'x', 0, 0, 0]];
+        ['x', 0, 'o', 'o', 'o', 'o', 0],
+        ['x', 0, 'x', 'x', 'o', 0, 0],
+        ['x', 0, 'o', 'o', 'x', 0, 0],
+        ['x', 0, 'o', 0, 0, 'x', 0]];
 
 
     var currentBoard2 =
@@ -23,9 +23,7 @@ function Board() {
         [0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0]];
 
-    function getBoard() {
-        return currentBoard;
-    }
+
 
     function updateBoard(location = [], player) {
         let row = location[0];
@@ -108,5 +106,9 @@ function Board() {
     );
 }
 export default Board;
+
+export function getBoard() {
+    return 5;
+}
 
 
