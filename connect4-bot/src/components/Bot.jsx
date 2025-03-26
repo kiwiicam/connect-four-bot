@@ -1,46 +1,19 @@
 //check for all legal moves first
 //minimax algorith with Alpha-Beta Pruning ?
 
-//import { checkWin } from './Board';
-
+// import {currentBoard} from './Board';
+var count = 0;
 export function allLegalMoves(board) {
-
-    console.log("function called")
-    var movesArray = []
-    for (var i = 0; i < board[0].length; i++) //for each column
-    {
-        for (var o = 0; o < board.length; o++) //for each row
-        {
-            if (board[o][i] === 'x') {
-                if (o > 0) {
-                    board[o - 1][i] = 'L'
-                    var result = o - 1 + "," + i
-                    movesArray.push(result)
-                    break;
-                }
-                else {
-                    console.log("column is full")
-                    break;
-                }
-
+    var movesArray = [];
+    for (var i = 0; i < board[0].length; i++) { //each column
+        for (var o = board.length - 1; o >= 0; o--) { // each row
+            if (board[o][i] === 0) {
+                movesArray.push(`${o},${i}`);
+                break;
             }
-
-            if (o === board.length - 1) {
-                if (board[o][i] === 0) {
-                    board[o][i] = 'L';
-                    var result = o + "," + i
-                    movesArray.push(result)
-                    break;
-                }
-            }
-
-
-
         }
     }
-    console.log(board);
     return movesArray;
-
 }
 
 export function checkWin(board) {
@@ -78,7 +51,6 @@ export function checkWin(board) {
                 if (char === prev) {
                     count++;
                     if (count === 4) {
-                        console.log("WINNNER!");
                         return;
                     }
                 }
@@ -105,8 +77,6 @@ export function checkWin(board) {
                     var two = board[i + 1][o - 1];
                     var three = board[i + 2][o - 2];
                     var four = board[i + 3][o - 3];
-
-                    console.log(prev, two, three, four);
 
                     if (prev === two && two === three && three === four) {
                         winnarray.push(board[i][o]);
@@ -349,6 +319,21 @@ function evaluationInARow(board) {
     return sum;
 }
 
+function updateBoard(board, location = [], player) {
+
+    let row = parseInt(location[0]);
+    let col = parseInt(location[1]);
+    if (board[row][col] === 0) {
+        board[row][col] = player;
+        return board;
+    }
+    else {
+        console.log("update board error");
+        return;
+    }
+
+}
+
 export function Evaluation(board) {
     //init sum to 0 (even rating)
     var sum = 0;
@@ -358,25 +343,72 @@ export function Evaluation(board) {
     //run the position through the evaluation table to see who has the best pieces in each position
     sum += evaluationTableSum(board)
 
-
     return sum;
 }
 
+export function Test(board) {
+    let bestMove = minimax(board, 10, true);
+    console.log(`Best move for the bot: ${bestMove.move}`);
+    console.log(count, "different positions have been checked")
+}
 
 
 
 
-function minimax(board, depth, maximizingPlayer, alpha, beta) {
+function minimax(board, depth, maximizingPlayer) {
+    count++;
+    //base case due to recursive function
     if (depth === 0 || checkWin(board)) {
+        return { score: Evaluation(board), move: null };
+    }
+
+    if (maximizingPlayer) {
+        return maxValue(board, depth);
+    } else {
+
+        return minValue(board, depth);
+    }
+}
+
+function maxValue(board, depth) {
+
+    var legalmoves = allLegalMoves(board);
+
+    var maxVal = -Infinity;
+    var bestmove = null;
+
+    for (var move of legalmoves) {
+        var moveArr = move.split(',');
+        var newBoard = JSON.parse(JSON.stringify(board));
+        newBoard = updateBoard(newBoard, moveArr, 'x');
+        var result = minimax(newBoard, depth - 1, false);
+
+        if (result.score > maxVal) {
+            maxVal = result.score;
+            bestmove = move;
+        }
 
     }
-    var legalmoves = allLegalMoves(board)
 
+    return { score: maxVal, move: bestmove };
 }
 
-function maxValue(board) {
+function minValue(board, depth) {
+    var legalmoves = allLegalMoves(board);
+    var minVal = Infinity;
+    var bestmove = null;
+    for (var move of legalmoves) {
+        var moveArr = move.split(',');
+        var newBoard = JSON.parse(JSON.stringify(board));
+        newBoard = updateBoard(newBoard, moveArr, 'o');
+        var result = minimax(newBoard, depth - 1, true);;
 
-}
-function minValue(board) {
+        if (result.score < minVal) {
+            minVal = result.score;
+            bestmove = move;
+        }
 
+    }
+
+    return { score: minVal, move: bestmove };
 }

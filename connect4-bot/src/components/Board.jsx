@@ -1,18 +1,16 @@
 import '../css/board.css';
 import React, { useEffect } from 'react';
-import { allLegalMoves, Evaluation, checkWin } from './Bot';
-
+import { allLegalMoves, Evaluation, checkWin, Test } from './Bot';
+export var currentBoard =
+    [[0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0]];
 
 
 function Board() {
-
-    var currentBoard =
-        [['x', 'x', 'x', 'x', 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        ['x', 0, 'o', 'o', 'o', 'o', 0],
-        ['x', 0, 'x', 'x', 'o', 0, 0],
-        ['x', 0, 'o', 'o', 'x', 0, 0],
-        ['x', 0, 'o', 0, 0, 'x', 0]];
 
 
     var currentBoard2 =
@@ -38,77 +36,77 @@ function Board() {
 
     }
 
-    useEffect(() => {
-        console.log(Evaluation(currentBoard));
-    }, []);
+    function press() {
+        Test(currentBoard);
+    }
 
     return (
-        <div className="board">
-            <div className='col'>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-            </div>
+        <>
+            <button onClick={() => { press() }}></button>
+            <div className="board">
+                <div className='col'>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                </div>
 
-            <div className='col'>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-            </div>
-            <div className='col'>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-            </div>
-            <div className='col'>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-            </div>
-            <div className='col'>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-            </div>
-            <div className='col'>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-            </div>
-            <div className='col'>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-                <div className='square'> </div>
-            </div>
+                <div className='col'>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                </div>
+                <div className='col'>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                </div>
+                <div className='col'>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                </div>
+                <div className='col'>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                </div>
+                <div className='col'>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                </div>
+                <div className='col'>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                    <div className='square'> </div>
+                </div>
 
-        </div>
+            </div>
+        </>
     );
 }
 export default Board;
 
-export function getBoard() {
-    return 5;
-}
 
 
