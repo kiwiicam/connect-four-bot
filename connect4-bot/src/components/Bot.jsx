@@ -28,7 +28,6 @@ export function checkWin(board) {
                 if (char === prev) {
                     count++;
                     if (count === 4) {
-                        console.log("WINNNER!")
                         return true;
                     }
                 }
@@ -62,7 +61,6 @@ export function checkWin(board) {
 
         }
     }
-    //TODO implement diagonal win detection
     var prev;
     var count = 1;
     var two;
@@ -83,8 +81,6 @@ export function checkWin(board) {
                         winnarray.push(board[i + 1][o - 1]);
                         winnarray.push(board[i + 2][o - 2]);
                         winnarray.push(board[i + 3][o - 3]);
-                        console.log("WIN BY BOTTOM-LEFT TO TOP-RIGHT DIAGONAL");
-                        console.log(winnarray);
                         return;
                     }
                 }
@@ -99,8 +95,6 @@ export function checkWin(board) {
                         winnarray.push(board[i + 1][o + 1])
                         winnarray.push(board[i + 2][o + 2])
                         winnarray.push(board[i + 3][o + 3])
-                        console.log("WIN BY DIAGONAL bottm right to top left")
-                        console.log(winnarray);
                         return
                     }
                 }
@@ -150,14 +144,14 @@ function evaluationInARow(board) {
                             sum -= 1000
                         }
                     }
-                    // if (board[i - 1][o] === player && board[i - 2][o] === player && board[i - 3][o] === 0) {
-                    //     if (player === 'x') {
-                    //         sum += 100
-                    //     }
-                    //     else {
-                    //         sum -= 100
-                    //     }
-                    // }
+                    if (board[i - 1][o] === player && board[i - 2][o] === player && board[i - 3][o] === 0) {
+                        if (player === 'x') {
+                            sum += 100
+                        }
+                        else {
+                            sum -= 100
+                        }
+                    }
                 }
 
             }
@@ -181,14 +175,14 @@ function evaluationInARow(board) {
                             }
                         }
 
-                        // if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0 && board[i + 1][o + 3] !== 0) {
-                        //     if (player === 'x') {
-                        //         sum += 100
-                        //     }
-                        //     else {
-                        //         sum -= 100
-                        //     }
-                        // }
+                        if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0 && board[i + 1][o + 3] !== 0) {
+                            if (player === 'x') {
+                                sum += 100
+                            }
+                            else {
+                                sum -= 100
+                            }
+                        }
                     }
                     else {
                         if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === player) {
@@ -199,14 +193,14 @@ function evaluationInARow(board) {
                                 sum -= 1000
                             }
                         }
-                        // if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0) {
-                        //     if (player === 'x') {
-                        //         sum += 100
-                        //     }
-                        //     else {
-                        //         sum -= 100
-                        //     }
-                        // }
+                        if (board[i][o + 1] === player && board[i][o + 2] === player && board[i][o + 3] === 0) {
+                            if (player === 'x') {
+                                sum += 100
+                            }
+                            else {
+                                sum -= 100
+                            }
+                        }
                     }
 
                 }
@@ -223,33 +217,33 @@ function evaluationInARow(board) {
                                 sum -= 1000
                             }
                         }
-                        // if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0 && board[i + 1][o - 3] !== 0) {
-                        //     if (player === 'x') {
-                        //         sum += 100
-                        //     }
-                        //     else {
-                        //         sum -= 100
-                        //     }
-                        // }
+                        if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0 && board[i + 1][o - 3] !== 0) {
+                            if (player === 'x') {
+                                sum += 100
+                            }
+                            else {
+                                sum -= 100
+                            }
+                        }
                     }
                     else {
                         if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === player) {
                             if (player === 'x') {
                                 sum += 1000
-                                console.log("found correct four in a (horiz)")
+
                             }
                             else {
                                 sum -= 1000
                             }
                         }
-                        // if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0) {
-                        //     if (player === 'x') {
-                        //         sum += 100
-                        //     }
-                        //     else {
-                        //         sum -= 100
-                        //     }
-                        // }
+                        if (board[i][o - 1] === player && board[i][o - 2] === player && board[i][o - 3] === 0) {
+                            if (player === 'x') {
+                                sum += 100
+                            }
+                            else {
+                                sum -= 100
+                            }
+                        }
                     }
 
                 }
@@ -269,7 +263,7 @@ function evaluationInARow(board) {
                     if (board[i - 1][o + 1] === player && board[i - 2][o + 2] === player && board[i - 3][o + 3] === player) {
                         if (player === 'x') {
                             sum += 1000
-                            console.log("found correct four in a row (diag)")
+
 
                         }
                         else {
@@ -294,7 +288,6 @@ function evaluationInARow(board) {
                         if (board[i - 1][o - 1] === player && board[i - 2][o - 2] === player && board[i - 3][o - 3] === player) {
                             if (player === 'x') {
                                 sum += 1000
-                                console.log("found correct four in a row (diag)")
                             }
                             else {
                                 sum -= 1000
@@ -347,30 +340,32 @@ export function Evaluation(board) {
 }
 
 export function Test(board) {
-    let bestMove = minimax(board, 10, true);
+    console.log("Bot is thinking....")
+    let bestMove = minimax(board, 7, true);
     console.log(`Best move for the bot: ${bestMove.move}`);
     console.log(count, "different positions have been checked")
+    count = 0;
 }
 
 
 
 
-function minimax(board, depth, maximizingPlayer) {
+function minimax(board, depth, maximizingPlayer, alpha, beta) {
     count++;
-    //base case due to recursive function
+    //base case 
     if (depth === 0 || checkWin(board)) {
         return { score: Evaluation(board), move: null };
     }
 
     if (maximizingPlayer) {
-        return maxValue(board, depth);
+        return maxValue(board, depth, alpha, beta);
     } else {
 
-        return minValue(board, depth);
+        return minValue(board, depth, alpha, beta);
     }
 }
 
-function maxValue(board, depth) {
+function maxValue(board, depth, alpha, beta) {
 
     var legalmoves = allLegalMoves(board);
 
@@ -381,7 +376,7 @@ function maxValue(board, depth) {
         var moveArr = move.split(',');
         var newBoard = JSON.parse(JSON.stringify(board));
         newBoard = updateBoard(newBoard, moveArr, 'x');
-        var result = minimax(newBoard, depth - 1, false);
+        var result = minimax(newBoard, depth - 1, false, alpha, beta);
 
         if (result.score > maxVal) {
             maxVal = result.score;
@@ -393,7 +388,7 @@ function maxValue(board, depth) {
     return { score: maxVal, move: bestmove };
 }
 
-function minValue(board, depth) {
+function minValue(board, depth, alpha, beta) {
     var legalmoves = allLegalMoves(board);
     var minVal = Infinity;
     var bestmove = null;
@@ -401,13 +396,12 @@ function minValue(board, depth) {
         var moveArr = move.split(',');
         var newBoard = JSON.parse(JSON.stringify(board));
         newBoard = updateBoard(newBoard, moveArr, 'o');
-        var result = minimax(newBoard, depth - 1, true);;
+        var result = minimax(newBoard, depth - 1, true, alpha, beta);;
 
         if (result.score < minVal) {
             minVal = result.score;
             bestmove = move;
         }
-
     }
 
     return { score: minVal, move: bestmove };
